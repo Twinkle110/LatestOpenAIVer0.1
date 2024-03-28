@@ -6,7 +6,7 @@ def app():
       #  page_icon="🤖",
     #)
 
-    st.header("Talent Analytics Chatbot")
+    st.header("People Success Chatbot")
     st.sidebar.success("Select a page above.")
 
     # Add "Talent Analytics Chatbot" as content
