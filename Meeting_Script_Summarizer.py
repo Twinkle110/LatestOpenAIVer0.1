@@ -26,7 +26,7 @@ def app():
     # System message
     st.write("Please upload a .docx file to generate minutes of the meeting.")
 
-   uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
+    uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
 
     # Chat option
     user_question = st.text_input("Ask a question about the document:")
