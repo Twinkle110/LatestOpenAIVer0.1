@@ -26,7 +26,10 @@ def app():
     # System message
     st.write("Please upload a .docx file to generate minutes of the meeting.")
 
-    uploaded_file = st.file_uploader("Choose a .docx file", "docx")
+   uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
+
+    # Chat option
+    user_question = st.text_input("Ask a question about the document:")
 
     # Enable button only if file is uploaded
     if uploaded_file is not None:
@@ -35,9 +38,17 @@ def app():
         submit_button = None
 
     if submit_button:
-        # Read the uploaded Word document
-        docx_data = BytesIO(uploaded_file.read())
-        text_data = docx2txt.process(docx_data)
+        # Read the uploaded file
+        file_content = uploaded_file.read()
+        
+        if uploaded_file.type == "text/plain":  # If file is .txt
+            text_data = file_content.decode("utf-8")
+        elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":  # If file is .docx
+            docx_data = BytesIO(file_content)
+            text_data = docx2txt.process(docx_data)
+        else:
+            st.error("Unsupported file type. Please upload a .txt or .docx file.")
+            return
         
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
